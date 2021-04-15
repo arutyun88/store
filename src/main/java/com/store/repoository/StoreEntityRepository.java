@@ -1,15 +1,13 @@
 package com.store.repoository;
 
 import com.store.model.StoreEntity;
-import com.store.model.dto.StatusResult;
-import lombok.extern.java.Log;
+import com.store.util.StatusResult;
 
 import javax.ejb.Stateless;
 import javax.persistence.*;
 import java.util.List;
 
 @Stateless
-@Log
 public class StoreEntityRepository {
 
     @PersistenceContext
@@ -20,13 +18,10 @@ public class StoreEntityRepository {
         Query query = entityManager.createQuery("from StoreEntity where storeName = : store_name");
         try {
             query.setParameter("store_name", storeName).getSingleResult();
-            log.info("Склад не может быть создан.");
         } catch (NonUniqueResultException exception){
-            log.info("Склад " + storeName + " зарегистрирован.");
             return StatusResult.FAILED_DOUBLE;
         } catch (NoResultException exception) {
             entityManager.persist(storeEntity);
-            log.info("Склад " + storeName + " зарегистрирован.");
             return StatusResult.OK;
         }
         return StatusResult.FAILED_EXISTS;

@@ -15,6 +15,7 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <java.version>11</java.version>
     <maven.compiler.version>3.8.1</maven.compiler.version>
+    <lombok.version>1.18.12.0</lombok.version>
   </properties>
 
   <dependencies>
@@ -55,10 +56,8 @@
     <dependency>
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok-maven-plugin</artifactId>
-      <version>1.18.12.0</version>
-      <scope>provided</scope>
+      <version>${lombok.version}</version>
     </dependency>
-
 
   </dependencies>
 
