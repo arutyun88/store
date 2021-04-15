@@ -1,12 +1,11 @@
 package com.store.repoository;
 
 import com.store.model.StoreEntity;
+import com.store.util.StatusResult;
 
 import javax.ejb.Stateless;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
-import javax.persistence.TypedQuery;
+import javax.persistence.*;
+import javax.ws.rs.core.Response;
 import java.util.List;
 
 @Stateless
@@ -15,8 +14,18 @@ public class StoreEntityRepository {
     @PersistenceContext
     private EntityManager entityManager;
 
-    public void addStore(StoreEntity storeEntity) {
-        entityManager.persist(storeEntity);
+    public StatusResult addStore(StoreEntity storeEntity) {
+        String storeName = storeEntity.getStoreName();
+        Query query = entityManager.createQuery("from StoreEntity where storeName = : store_name");
+        try {
+            query.setParameter("store_name", storeName).getSingleResult();
+        } catch (NonUniqueResultException exception){
+            return StatusResult.FAILED_DOUBLE;
+        } catch (NoResultException exception) {
+            entityManager.persist(storeEntity);
+            return StatusResult.OK;
+        }
+        return StatusResult.FAILED_EXISTS;
     }
 
     public List<StoreEntity> getStores() {
@@ -33,8 +42,13 @@ public class StoreEntityRepository {
         return (StoreEntity) query.setParameter("id", id).getSingleResult();
     }
 
-    public void deleteStoreById(long id) {
-        StoreEntity storeEntity = findById(id);
-        entityManager.remove(storeEntity);
+    public Response deleteStoreById(long id) {
+        try {
+            StoreEntity storeEntity = findById(id);
+            entityManager.remove(storeEntity);
+            return Response.ok().build();
+        } catch (ClassCastException | NoResultException exception) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
     }
 }
