@@ -6,7 +6,7 @@
     <persistence-unit name="storeUnit" transaction-type="JTA">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
         <jta-data-source>java:/storeDb</jta-data-source>
-        <class>com.store.model.StoreEntity</class>
+        <class>com.store.model.entity.StoreEntity</class>
         <properties>
             <property name="hibernate.dialect" value="org.hibernate.dialect.PostgresPlusDialect"/>
             <property name="hibernate.enable_lazy_load_no_trans" value="true"/>

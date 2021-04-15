@@ -1,6 +1,6 @@
 package com.store.controller;
 
-import com.store.model.StoreEntity;
+import com.store.model.entity.StoreEntity;
 import com.store.model.dto.ErrorMessage;
 import com.store.util.StatusResult;
 import com.store.repoository.StoreEntityRepository;

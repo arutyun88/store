@@ -1,6 +1,6 @@
 package com.store.repoository;
 
-import com.store.model.MovementEntity;
+import com.store.model.document.MovementEntity;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;

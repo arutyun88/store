@@ -1,6 +1,6 @@
 package com.store.repoository;
 
-import com.store.model.ProductEntity;
+import com.store.model.entity.ProductEntity;
 import com.store.util.StatusResult;
 
 import javax.ejb.Stateless;
