@@ -2,14 +2,11 @@ package com.store.model;
 
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import java.util.List;
+import javax.persistence.*;
 
 @Data
 @Entity
+@Table(name = "movements")
 public class MovementEntity {
 
     @Id
@@ -17,7 +14,7 @@ public class MovementEntity {
     private long id;
 
     private String number;
-    private StoreEntity toStore;
-    private StoreEntity fromStore;
-    private List<ProductEntity> products;
+//    private StoreEntity toStore;
+//    private StoreEntity fromStore;
+//    private List<ProductEntity> products;
 }

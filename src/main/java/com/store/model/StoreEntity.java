@@ -16,8 +16,4 @@ public class StoreEntity {
 
     @Column(name = "store_name")
     private String storeName;
-
-    private String number;
-    private StoreEntity store;
-    private List<ProductEntity> products;
 }
