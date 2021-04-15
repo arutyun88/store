@@ -7,7 +7,25 @@ import javax.ws.rs.core.Response;
 
 import static com.store.util.InfoResult.*;
 
-public class ErrorResponseService {
+public class ResponseService {
+
+    public static Response getResponse(Response response) {
+        if (response.getStatus() == OK) {
+            return response;
+        } else if (response.getStatus() == NOT_FOUND) {
+            return Response.status(NOT_FOUND).entity(
+                    ErrorMessage.builder()
+                            .code(NOT_FOUND)
+                            .message(NOT_FOUND_MESSAGE)
+                            .build())
+                    .build();
+        } else return Response.status(FATAL_ERROR).entity(
+                ErrorMessage.builder()
+                        .code(FATAL_ERROR)
+                        .message(FATAL_ERROR_MESSAGE)
+                        .build())
+                .build();
+    }
 
     public static Response getErrorResponse(StatusResult statusResult) {
         if (StatusResult.FAILED_DOUBLE.equals(statusResult)) {

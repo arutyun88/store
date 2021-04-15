@@ -5,6 +5,7 @@ import com.store.util.StatusResult;
 
 import javax.ejb.Stateless;
 import javax.persistence.*;
+import javax.ws.rs.core.Response;
 import java.util.List;
 
 @Stateless
@@ -41,8 +42,13 @@ public class StoreEntityRepository {
         return (StoreEntity) query.setParameter("id", id).getSingleResult();
     }
 
-    public void deleteStoreById(long id) {
-        StoreEntity storeEntity = findById(id);
-        entityManager.remove(storeEntity);
+    public Response deleteStoreById(long id) {
+        try {
+            StoreEntity storeEntity = findById(id);
+            entityManager.remove(storeEntity);
+            return Response.ok().build();
+        } catch (ClassCastException | NoResultException exception) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
     }
 }

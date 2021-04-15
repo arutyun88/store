@@ -5,6 +5,7 @@ import com.store.util.StatusResult;
 
 import javax.ejb.Stateless;
 import javax.persistence.*;
+import javax.ws.rs.core.Response;
 import java.util.List;
 
 @Stateless
@@ -52,5 +53,50 @@ public class ProductEntityRepository {
 
     public void updateProduct(ProductEntity productEntity) {
         entityManager.merge(productEntity);
+    }
+
+    public Response findProductById(long id) {
+        Query query = entityManager.createQuery("from ProductEntity where id = : id");
+        try {
+            return Response.status(Response.Status.OK).entity(query.setParameter("id", id).getSingleResult()).build();
+        } catch (NoResultException exception) {
+            return Response.status(Response.Status.NOT_FOUND).entity(StatusResult.NOT_FOUND).build();
+        }
+    }
+
+    public List<ProductEntity> checkProduct(ProductEntity productEntity) {
+        String article = productEntity.getArticle();
+        String productName = productEntity.getProductName();
+        long id = productEntity.getId();
+        TypedQuery<ProductEntity> query = entityManager.createQuery(
+                "from ProductEntity where (article = : article or productName = : product_name) and id != : id",
+                ProductEntity.class);
+        return query
+                .setParameter("product_name", productName)
+                .setParameter("article", article)
+                .setParameter("id", id)
+                .getResultList();
+    }
+
+    public Response findProductByproductName(String productName) {
+        Query query = entityManager.createQuery("from ProductEntity where productName = : product_name");
+        try {
+            return Response.status(Response.Status.OK).entity(query
+                    .setParameter("product_name", productName)
+                    .getSingleResult()).build();
+        } catch (NoResultException exception) {
+            return Response.status(Response.Status.NOT_FOUND).entity(StatusResult.NOT_FOUND).build();
+        }
+    }
+
+    public Response deleteProductById(long id) {
+        Response response = findProductById(id);
+        try {
+            ProductEntity productEntity = (ProductEntity) response.getEntity();
+            entityManager.remove(productEntity);
+            return Response.ok().build();
+        } catch (ClassCastException exception) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
     }
 }

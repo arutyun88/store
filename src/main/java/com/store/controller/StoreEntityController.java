@@ -11,7 +11,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
 
-import static com.store.service.ErrorResponseService.getErrorResponse;
+import static com.store.service.ResponseService.getErrorResponse;
 import static com.store.util.InfoResult.*;
 
 @Path("store")
@@ -38,9 +38,18 @@ public class StoreEntityController {
 
     @DELETE
     @Path("delete/{id}")
-    @Consumes("application/json")
-    public void deleteStoreEntity(@PathParam("id") long id) {
-        storeEntityRepository.deleteStoreById(id);
+    @Produces("application/json")
+    public Response deleteStoreEntity(@PathParam("id") long id) {
+        Response response = storeEntityRepository.deleteStoreById(id);
+        if (response.getStatus() == OK) {
+            return Response.status(OK).build();
+        }
+        return Response.status(NOT_FOUND).entity(
+                ErrorMessage.builder()
+                        .code(NOT_FOUND)
+                        .message(NOT_FOUND_MESSAGE)
+                        .build())
+                .build();
     }
 
     @POST
