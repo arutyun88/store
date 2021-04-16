@@ -37,18 +37,47 @@ public class StoreEntityRepository {
         entityManager.merge(storeEntity);
     }
 
-    public StoreEntity findById(long id) {
-        Query query = entityManager.createQuery("from StoreEntity where id = : id");
-        return (StoreEntity) query.setParameter("id", id).getSingleResult();
-    }
-
     public Response deleteStoreById(long id) {
         try {
-            StoreEntity storeEntity = findById(id);
+            StoreEntity storeEntity = (StoreEntity)  createQueryById(id).getSingleResult();
             entityManager.remove(storeEntity);
             return Response.ok().build();
         } catch (ClassCastException | NoResultException exception) {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
+    }
+
+    public Response findStoreById(long id) {
+        try {
+            return Response.status(Response.Status.OK).entity(createQueryById(id).getSingleResult()).build();
+        } catch (NoResultException exception) {
+            return Response.status(Response.Status.NOT_FOUND).entity(StatusResult.NOT_FOUND).build();
+        }
+    }
+
+    public Response findStoreByName(String storeName) {
+        Query query = entityManager.createQuery("from StoreEntity where storeName = : store_name");
+        try {
+            return Response.status(Response.Status.OK).entity(query
+                    .setParameter("store_name", storeName)
+                    .getSingleResult()).build();
+        } catch (NoResultException exception) {
+            return Response.status(Response.Status.NOT_FOUND).entity(StatusResult.NOT_FOUND).build();
+        }
+    }
+
+    public List<StoreEntity> checkStore(StoreEntity storeEntity) {
+        String storeName = storeEntity.getStoreName();
+        TypedQuery<StoreEntity> query = entityManager.createQuery(
+                "from StoreEntity where storeName = : store_name",
+                StoreEntity.class);
+        return query
+                .setParameter("store_name", storeName)
+                .getResultList();
+    }
+
+    private Query createQueryById(long id) {
+        Query query = entityManager.createQuery("from StoreEntity where id = : id");
+        return query.setParameter("id", id);
     }
 }
