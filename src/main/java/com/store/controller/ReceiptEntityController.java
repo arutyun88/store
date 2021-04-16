@@ -1,7 +1,6 @@
 package com.store.controller;
 
 import com.store.model.document.ReceiptEntity;
-import com.store.model.entity.StoreEntity;
 import com.store.service.ReceiptEntityService;
 
 import javax.inject.Inject;

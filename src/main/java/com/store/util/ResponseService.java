@@ -1,7 +1,6 @@
 package com.store.util;
 
 import com.store.model.dto.ErrorMessage;
-import com.store.util.StatusResult;
 
 import javax.ws.rs.core.Response;
 
