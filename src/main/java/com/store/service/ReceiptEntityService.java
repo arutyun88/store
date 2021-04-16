@@ -19,7 +19,6 @@ public class ReceiptEntityService {
     }
 
     public Response addReceipt(ReceiptEntity receiptEntity) {
-        receiptEntityRepository.addReceipt(receiptEntity);
-        return Response.ok().entity("Запись добавлена").build();
+        return receiptEntityRepository.addReceipt(receiptEntity);
     }
 }

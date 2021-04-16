@@ -1,6 +1,5 @@
 package com.store.model.document;
 
-import com.store.model.entity.ProductEntity;
 import com.store.model.entity.StoreEntity;
 import lombok.Data;
 
@@ -25,8 +24,8 @@ public class ReceiptEntity {
 
     @ManyToMany
     @JoinTable(
-            name = "receipts_products_table",
+            name = "document_receipts_products",
             joinColumns = @JoinColumn(name = "id_receipt", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "id_product", referencedColumnName = "id"))
-    private List<ProductEntity> products = new ArrayList<>();
+            inverseJoinColumns = @JoinColumn(name = "id_product_list", referencedColumnName = "id"))
+    private List<ProductListEntity> products = new ArrayList<>();
 }

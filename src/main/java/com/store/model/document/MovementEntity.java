@@ -1,6 +1,5 @@
 package com.store.model.document;
 
-import com.store.model.entity.ProductEntity;
 import com.store.model.entity.StoreEntity;
 import lombok.Data;
 
@@ -28,8 +27,8 @@ public class MovementEntity {
 
     @ManyToMany
     @JoinTable(
-            name = "movement_products_table",
+            name = "document_movement_products",
             joinColumns = @JoinColumn(name = "id_movement", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "id_product", referencedColumnName = "id"))
-    private List<ProductEntity> products;
+            inverseJoinColumns = @JoinColumn(name = "id_product_list", referencedColumnName = "id"))
+    private List<ProductListEntity> products;
 }
