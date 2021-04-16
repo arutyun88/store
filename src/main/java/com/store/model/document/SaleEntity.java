@@ -1,4 +1,4 @@
-package com.store.model;
+package com.store.model.document;
 
 import lombok.Data;
 
@@ -7,8 +7,8 @@ import java.util.List;
 
 @Data
 @Entity
-@Table(name = "receipts")
-public class ReceiptEntity {
+@Table(name = "sales")
+public class SaleEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

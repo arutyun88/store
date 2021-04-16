@@ -1,20 +1,20 @@
-package com.store.model;
+package com.store.model.document;
 
 import lombok.Data;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Data
 @Entity
-@Table(name = "sales")
-public class SaleEntity {
+@Table(name = "movements")
+public class MovementEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
     private String number;
-//    private StoreEntity store;
+//    private StoreEntity toStore;
+//    private StoreEntity fromStore;
 //    private List<ProductEntity> products;
 }

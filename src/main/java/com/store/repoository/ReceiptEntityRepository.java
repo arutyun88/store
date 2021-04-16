@@ -1,6 +1,6 @@
 package com.store.repoository;
 
-import com.store.model.ReceiptEntity;
+import com.store.model.document.ReceiptEntity;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;

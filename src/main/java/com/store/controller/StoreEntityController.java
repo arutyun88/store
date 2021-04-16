@@ -1,9 +1,7 @@
 package com.store.controller;
 
-import com.store.model.StoreEntity;
-import com.store.model.dto.ErrorMessage;
-import com.store.util.StatusResult;
-import com.store.repoository.StoreEntityRepository;
+import com.store.model.entity.StoreEntity;
+import com.store.service.StoreEntityService;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
@@ -11,51 +9,51 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
 
-import static com.store.service.ResponseService.getErrorResponse;
-import static com.store.util.InfoResult.*;
-
 @Path("store")
 public class StoreEntityController {
 
     @Inject
-    private StoreEntityRepository storeEntityRepository;
+    private StoreEntityService service;
 
     @PUT
     @Path("add")
     @Produces(MediaType.APPLICATION_JSON)
     public Response addStore(StoreEntity storeEntity) {
-        StatusResult statusResult = storeEntityRepository.addStore(storeEntity);
-        if (statusResult.equals(StatusResult.OK)) return Response.status(OK).build();
-        else return getErrorResponse(statusResult);
+        return service.addStore(storeEntity);
     }
 
     @GET
     @Path("all")
     @Produces("application/json")
     public List<StoreEntity> getStores() {
-        return storeEntityRepository.getStores();
+        return service.getAllStores();
+    }
+
+    @GET
+    @Path("get/id/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getStoreById(@PathParam("id") long id) {
+        return service.getStoreById(id);
+    }
+
+    @GET
+    @Path("get/name/{storeName}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getStoreByName(@PathParam("storeName") String storeName) {
+        return service.getStoreByName(storeName);
     }
 
     @DELETE
     @Path("delete/{id}")
     @Produces("application/json")
     public Response deleteStoreEntity(@PathParam("id") long id) {
-        Response response = storeEntityRepository.deleteStoreById(id);
-        if (response.getStatus() == OK) {
-            return Response.status(OK).build();
-        }
-        return Response.status(NOT_FOUND).entity(
-                ErrorMessage.builder()
-                        .code(NOT_FOUND)
-                        .message(NOT_FOUND_MESSAGE)
-                        .build())
-                .build();
+        return service.deleteStoreById(id);
     }
 
     @POST
     @Path("update")
-    @Consumes("application/json")
-    public void updateStoreEntity(StoreEntity entity) {
-        storeEntityRepository.updateStore(entity);
+    @Produces("application/json")
+    public Response updateStoreEntity(StoreEntity entity) {
+        return service.updateStore(entity);
     }
 }
