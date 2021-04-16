@@ -1,5 +1,7 @@
 package com.store.model.document;
 
+import com.store.model.entity.ProductEntity;
+import com.store.model.entity.StoreEntity;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -15,6 +17,15 @@ public class SaleEntity {
     private long id;
 
     private String number;
-//    private StoreEntity store;
-//    private List<ProductEntity> products;
+
+    @ManyToOne
+    @JoinColumn(name = "store_id")
+    private StoreEntity store;
+
+    @ManyToMany
+    @JoinTable(
+            name = "sale_products_table",
+            joinColumns = @JoinColumn(name = "id_sale", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "id_product", referencedColumnName = "id"))
+    private List<ProductEntity> products;
 }
