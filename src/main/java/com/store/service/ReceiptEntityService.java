@@ -96,4 +96,17 @@ public class ReceiptEntityService {
         Response response = receiptEntityRepository.findReceiptByNumber(receiptNumber);
         return getResponseReceipt(response);
     }
+
+    public Response deleteReceiptById(long id) {
+        Response response = receiptEntityRepository.deleteReceiptById(id);
+        if (response.getStatus() == OK) {
+            return Response.status(OK).build();
+        }
+        return Response.status(NOT_FOUND).entity(
+                ErrorMessage.builder()
+                        .code(NOT_FOUND)
+                        .message(NOT_FOUND_MESSAGE)
+                        .build())
+                .build();
+    }
 }

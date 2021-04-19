@@ -49,4 +49,11 @@ public class ReceiptEntityController {
     public Response getReceiptByReceiptNumber(@PathParam("receiptNumber") String receiptNumber) {
         return service.getReceiptByReceiptNumber(receiptNumber);
     }
+
+    @DELETE
+    @Path("delete/{id}")
+    @Produces("application/json")
+    public Response deleteReceiptEntity(@PathParam("id") long id) {
+        return service.deleteReceiptById(id);
+    }
 }

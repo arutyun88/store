@@ -1,6 +1,7 @@
 package com.store.repoository;
 
 import com.store.model.document.ProductListEntity;
+import com.store.model.document.ReceiptEntity;
 import com.store.model.document.SaleEntity;
 import com.store.util.StatusResult;
 
@@ -58,5 +59,20 @@ public class SaleEntityRepository {
         } catch (NoResultException exception) {
             return Response.status(Response.Status.NOT_FOUND).entity(StatusResult.NOT_FOUND).build();
         }
+    }
+
+    public Response deleteSaleById(long id) {
+        try {
+            SaleEntity storeEntity = (SaleEntity)  createQueryById(id).getSingleResult();
+            entityManager.remove(storeEntity);
+            return Response.ok().build();
+        } catch (ClassCastException | NoResultException exception) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+    }
+
+    private Query createQueryById(long id) {
+        Query query = entityManager.createQuery("from SaleEntity where id = : id");
+        return query.setParameter("id", id);
     }
 }
