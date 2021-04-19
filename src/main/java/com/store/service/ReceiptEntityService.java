@@ -3,6 +3,8 @@ package com.store.service;
 import com.store.model.document.ProductListEntity;
 import com.store.model.document.ReceiptEntity;
 import com.store.model.dto.ErrorMessage;
+import com.store.model.dto.ProductDto;
+import com.store.model.dto.ResponseProductDto;
 import com.store.repoository.ProductEntityRepository;
 import com.store.repoository.ReceiptEntityRepository;
 import com.store.repoository.StoreEntityRepository;
@@ -10,6 +12,7 @@ import com.store.repoository.StoreEntityRepository;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.ws.rs.core.Response;
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.store.util.InfoResult.*;
@@ -26,8 +29,28 @@ public class ReceiptEntityService {
     @Inject
     private StoreEntityRepository storeEntityRepository;
 
-    public List<ReceiptEntity> getAllReceipts() {
-        return receiptEntityRepository.getAllReceipts();
+    public List<ResponseProductDto> getAllReceipts() {
+        List<ReceiptEntity> receiptEntityList = receiptEntityRepository.getAllReceipts();
+
+        List<ResponseProductDto> responseProductDtoList = new ArrayList<>();
+
+        for (ReceiptEntity receiptEntity : receiptEntityList) {
+            List<ProductDto> productDtoList = new ArrayList<>();
+            for (ProductListEntity productListEntity : receiptEntity.getProducts()) {
+                productDtoList.add(ProductDtoService.mappingReceiptEntityToProductDto(
+                        productListEntity.getProduct(),
+                        productListEntity.getCount(),
+                        productListEntity.getPrice()));
+            }
+
+            responseProductDtoList.add(ResponseProductDto.builder()
+                    .id(receiptEntity.getId())
+                    .number(receiptEntity.getNumber())
+                    .store(receiptEntity.getStore().getStoreName())
+                    .products(productDtoList)
+                    .build());
+        }
+        return responseProductDtoList;
     }
 
     public Response addReceipt(ReceiptEntity receiptEntity) {

@@ -1,6 +1,7 @@
 package com.store.controller;
 
 import com.store.model.document.SaleEntity;
+import com.store.model.dto.ResponseProductDto;
 import com.store.service.SaleEntityService;
 
 import javax.inject.Inject;
@@ -23,7 +24,7 @@ public class SaleEntityController {
     @GET
     @Path("all")
     @Produces("application/json")
-    public List<SaleEntity> getAllSales() {
+    public List<ResponseProductDto> getAllSales() {
         return service.getAllSales();
     }
 

@@ -33,7 +33,7 @@ public class ReceiptEntityRepository {
                     productListEntity.getProduct().getId(),
                     productListEntity.getProduct().getLastPurchasePrice());
         }
-        productListEntityRepository.addProductList(receiptEntity.getProducts());
+        productListEntityRepository.addReceiptProductList(receiptEntity.getProducts());
         entityManager.merge(receiptEntity);
         return Response.ok().entity("Запись добавлена").build();
     }

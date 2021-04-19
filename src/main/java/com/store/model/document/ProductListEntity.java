@@ -20,4 +20,8 @@ public class ProductListEntity {
 
     @Column(name = "count")
     private int count;
+
+    @Column(name = "price")
+    private double price;
+
 }
