@@ -99,4 +99,18 @@ public class ProductEntityRepository {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
     }
+
+    public void changeLastPurchasePrice(long id, double price) {
+        Query query = entityManager.createQuery(
+                "update ProductEntity set lastPurchasePrice = : last_purchase_price where id = : id");
+
+        query.setParameter("id", id).setParameter("last_purchase_price", price).executeUpdate();
+    }
+
+    public void changeLastSalePrice(long id, double price) {
+        Query query = entityManager.createQuery(
+                "update ProductEntity set lastSalePrice = : last_sale_price where id = : id");
+
+        query.setParameter("id", id).setParameter("last_sale_price", price).executeUpdate();
+    }
 }

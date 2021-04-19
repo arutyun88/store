@@ -12,6 +12,8 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
 
+import static com.store.util.InfoResult.OK;
+
 @Path("receipt")
 public class ReceiptEntityController {
 
@@ -29,6 +31,10 @@ public class ReceiptEntityController {
     @Path("add")
     @Produces(MediaType.APPLICATION_JSON)
     public Response addReceipt(ReceiptEntity receiptEntity) {
-        return service.addReceipt(receiptEntity);
+        Response response = service.addReceipt(receiptEntity);
+        if (response.getStatus() == OK) {
+            return Response.status(OK).build();
+        }
+        return response;
     }
 }
