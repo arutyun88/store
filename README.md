@@ -436,46 +436,30 @@
 ```json
 [
   {
-    "id": 148,
-    "number": "1234567912",
-    "products": [
-      {
-        "count": 2,
-        "id": 147,
-        "product": {
-          "article": "12903479",
-          "id": 126,
-          "lastPurchasePrice": 4.0,
-          "lastSalePrice": 7.0,
-          "productName": "Хлеб"
-        }
-      }
-    ],
-    "store": {
-      "id": 124,
-      "storeName": "Москва"
-    }
-  },
-  {
-    "id": 152,
+    "id": 166,
     "number": "1234567913",
     "products": [
       {
         "count": 2,
-        "id": 151,
-        "product": {
-          "article": "12903479",
-          "id": 126,
-          "lastPurchasePrice": 4.0,
-          "lastSalePrice": 7.0,
-          "productName": "Хлеб"
-        }
+        "id": 126,
+        "name": "Хлеб",
+        "price": 4.0
       }
     ],
-    "store": {
-      "id": 124,
-      "storeName": "Москва"
-    }
+    "store": "Москва"
+  },
+  {
+    "id": 168,
+    "number": "1234567914",
+    "products": [
+      {
+        "count": 3,
+        "id": 126,
+        "name": "Хлеб",
+        "price": 9.0
+      }
+    ],
+    "store": "Москва"
   }
 ]
 ```
@@ -536,7 +520,7 @@
 
 <h2>/store/api/sale/all</h2>
 
-* Получение всех документов "Поступление" из БД
+* Получение всех документов "Продажа" из БД
 * Пример запроса: http://localhost:8080/store/api/sale/all
 * Тип запроса **GET**
 * Тело запроса отсутствует
@@ -549,67 +533,30 @@
 ```json
 [
   {
-    "id": 154,
-    "number": "1234567914",
+    "id": 162,
+    "number": "1234567918",
     "products": [
       {
         "count": 2,
-        "id": 153,
-        "product": {
-          "article": "12903479",
-          "id": 126,
-          "lastPurchasePrice": 4.0,
-          "lastSalePrice": 7.0,
-          "productName": "Хлеб"
-        }
+        "id": 126,
+        "name": "Хлеб",
+        "price": 13.0
       }
     ],
-    "store": {
-      "id": 124,
-      "storeName": "Москва"
-    }
+    "store": "Новосибирск"
   },
   {
-    "id": 156,
-    "number": "1234567915",
+    "id": 164,
+    "number": "1234567919",
     "products": [
       {
-        "count": 2,
-        "id": 155,
-        "product": {
-          "article": "12903479",
-          "id": 126,
-          "lastPurchasePrice": 4.0,
-          "lastSalePrice": 7.0,
-          "productName": "Хлеб"
-        }
+        "count": 3,
+        "id": 126,
+        "name": "Хлеб",
+        "price": 12.0
       }
     ],
-    "store": {
-      "id": 124,
-      "storeName": "Москва"
-    }
-  },
-  {
-    "id": 158,
-    "number": "1234567916",
-    "products": [
-      {
-        "count": 2,
-        "id": 157,
-        "product": {
-          "article": "12903479",
-          "id": 126,
-          "lastPurchasePrice": 4.0,
-          "lastSalePrice": 7.0,
-          "productName": "Хлеб"
-        }
-      }
-    ],
-    "store": {
-      "id": 122,
-      "storeName": "Новосибирск"
-    }
+    "store": "Новосибирск"
   }
 ]
 ```

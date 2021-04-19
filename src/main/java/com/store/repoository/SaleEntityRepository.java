@@ -28,7 +28,7 @@ public class SaleEntityRepository {
                     productListEntity.getProduct().getId(),
                     productListEntity.getProduct().getLastSalePrice());
         }
-        productListEntityRepository.addProductList(saleEntity.getProducts());
+        productListEntityRepository.addSaleProductList(saleEntity.getProducts());
         entityManager.merge(saleEntity);
         return Response.ok().entity("Запись добавлена").build();
     }

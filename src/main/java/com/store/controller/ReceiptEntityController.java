@@ -1,6 +1,7 @@
 package com.store.controller;
 
 import com.store.model.document.ReceiptEntity;
+import com.store.model.dto.ResponseProductDto;
 import com.store.service.ReceiptEntityService;
 
 import javax.inject.Inject;
@@ -23,7 +24,7 @@ public class ReceiptEntityController {
     @GET
     @Path("all")
     @Produces("application/json")
-    public List<ReceiptEntity> getAllReceipts() {
+    public List<ResponseProductDto> getAllReceipts() {
         return service.getAllReceipts();
     }
 
