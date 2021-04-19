@@ -98,4 +98,17 @@ public class SaleEntityService {
         Response response = repository.findSaleByNumber(saleNumber);
         return getResponseSale(response);
     }
+
+    public Response deleteSaleById(long id) {
+        Response response = repository.deleteSaleById(id);
+        if (response.getStatus() == OK) {
+            return Response.status(OK).build();
+        }
+        return Response.status(NOT_FOUND).entity(
+                ErrorMessage.builder()
+                        .code(NOT_FOUND)
+                        .message(NOT_FOUND_MESSAGE)
+                        .build())
+                .build();
+    }
 }

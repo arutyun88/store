@@ -49,4 +49,11 @@ public class SaleEntityController {
     public Response getSaleBySaleNumber(@PathParam("saleNumber") String saleNumber) {
         return service.getSaleBySaleNumber(saleNumber);
     }
+
+    @DELETE
+    @Path("delete/{id}")
+    @Produces("application/json")
+    public Response deleteSaleEntity(@PathParam("id") long id) {
+        return service.deleteSaleById(id);
+    }
 }
