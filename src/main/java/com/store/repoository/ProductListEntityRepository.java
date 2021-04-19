@@ -5,6 +5,7 @@ import com.store.model.document.ProductListEntity;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import java.util.List;
 
 @Stateless
@@ -25,5 +26,15 @@ public class ProductListEntityRepository {
             product.setPrice(product.getProduct().getLastSalePrice());
             entityManager.persist(product);
         }
+    }
+
+    public void deleteById(long id) {
+        ProductListEntity storeEntity = (ProductListEntity)  createQueryById(id).getSingleResult();
+        entityManager.remove(storeEntity);
+    }
+
+    private Query createQueryById(long id) {
+        Query query = entityManager.createQuery("from ProductListEntity where id = : id");
+        return query.setParameter("id", id);
     }
 }

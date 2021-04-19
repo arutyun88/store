@@ -65,6 +65,9 @@ public class SaleEntityRepository {
         try {
             SaleEntity storeEntity = (SaleEntity)  createQueryById(id).getSingleResult();
             entityManager.remove(storeEntity);
+            for (ProductListEntity productListEntity : storeEntity.getProducts()) {
+                productListEntityRepository.deleteById(productListEntity.getId());
+            }
             return Response.ok().build();
         } catch (ClassCastException | NoResultException exception) {
             return Response.status(Response.Status.NOT_FOUND).build();
