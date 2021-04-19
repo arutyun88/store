@@ -2,8 +2,6 @@ package com.store.repoository;
 
 import com.store.model.document.ProductListEntity;
 import com.store.model.document.ReceiptEntity;
-import com.store.model.dto.ErrorMessage;
-import com.store.model.entity.ProductEntity;
 import com.store.util.StatusResult;
 
 import javax.ejb.Stateless;
@@ -11,8 +9,6 @@ import javax.inject.Inject;
 import javax.persistence.*;
 import javax.ws.rs.core.Response;
 import java.util.List;
-
-import static com.store.util.InfoResult.*;
 
 @Stateless
 public class ReceiptEntityRepository {
@@ -22,9 +18,6 @@ public class ReceiptEntityRepository {
 
     @Inject
     private ProductEntityRepository productEntityRepository;
-
-    @Inject
-    private StoreEntityRepository storeEntityRepository;
 
     @PersistenceContext
     private EntityManager entityManager;
