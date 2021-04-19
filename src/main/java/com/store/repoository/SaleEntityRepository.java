@@ -48,4 +48,15 @@ public class SaleEntityRepository {
             return Response.status(Response.Status.NOT_FOUND).entity(StatusResult.NOT_FOUND).build();
         }
     }
+
+    public Response findSaleById(long id) {
+        Query query = entityManager.createQuery("from SaleEntity where id = : id");
+        try {
+            return Response.status(Response.Status.OK).entity(query
+                    .setParameter("id", id)
+                    .getSingleResult()).build();
+        } catch (NoResultException exception) {
+            return Response.status(Response.Status.NOT_FOUND).entity(StatusResult.NOT_FOUND).build();
+        }
+    }
 }

@@ -4,7 +4,7 @@ import com.store.model.document.ProductListEntity;
 import com.store.model.document.SaleEntity;
 import com.store.model.dto.ErrorMessage;
 import com.store.model.dto.ProductDto;
-import com.store.model.dto.ResponseProductDto;
+import com.store.model.dto.ResponseDocumentDto;
 import com.store.repoository.ProductEntityRepository;
 import com.store.repoository.SaleEntityRepository;
 import com.store.repoository.StoreEntityRepository;
@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.store.util.InfoResult.*;
+import static com.store.util.ResponseService.getResponseSale;
 
 @Stateless
 public class SaleEntityService {
@@ -29,11 +30,11 @@ public class SaleEntityService {
     @Inject
     private ProductEntityRepository productEntityRepository;
 
-    public List<ResponseProductDto> getAllSales() {
+    public List<ResponseDocumentDto> getAllSales() {
 
         List<SaleEntity> receiptEntityList = repository.getAllSales();
 
-        List<ResponseProductDto> responseProductDtoList = new ArrayList<>();
+        List<ResponseDocumentDto> responseDocumentDtoList = new ArrayList<>();
 
         for (SaleEntity receiptEntity : receiptEntityList) {
             List<ProductDto> productDtoList = new ArrayList<>();
@@ -44,16 +45,14 @@ public class SaleEntityService {
                         productListEntity.getPrice()));
             }
 
-            responseProductDtoList.add(ResponseProductDto.builder()
+            responseDocumentDtoList.add(ResponseDocumentDto.builder()
                     .id(receiptEntity.getId())
                     .number(receiptEntity.getNumber())
                     .store(receiptEntity.getStore().getStoreName())
                     .products(productDtoList)
                     .build());
         }
-        return responseProductDtoList;
-
-//        return repository.getAllSales();
+        return responseDocumentDtoList;
     }
 
     public Response addSale(SaleEntity saleEntity) {
@@ -88,5 +87,15 @@ public class SaleEntityService {
         }
 
         return repository.addSale(saleEntity);
+    }
+
+    public Response getSaleById(long id) {
+        Response response = repository.findSaleById(id);
+        return getResponseSale(response);
+    }
+
+    public Response getSaleBySaleNumber(String saleNumber) {
+        Response response = repository.findSaleByNumber(saleNumber);
+        return getResponseSale(response);
     }
 }

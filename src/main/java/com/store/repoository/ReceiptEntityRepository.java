@@ -48,4 +48,15 @@ public class ReceiptEntityRepository {
             return Response.status(Response.Status.NOT_FOUND).entity(StatusResult.NOT_FOUND).build();
         }
     }
+
+    public Response findReceiptById(long id) {
+        Query query = entityManager.createQuery("from ReceiptEntity where id = : id");
+        try {
+            return Response.status(Response.Status.OK).entity(query
+                    .setParameter("id", id)
+                    .getSingleResult()).build();
+        } catch (NoResultException exception) {
+            return Response.status(Response.Status.NOT_FOUND).entity(StatusResult.NOT_FOUND).build();
+        }
+    }
 }
