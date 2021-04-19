@@ -1,8 +1,18 @@
 package com.store.util;
 
+import com.store.model.document.ProductListEntity;
+import com.store.model.document.ReceiptEntity;
+import com.store.model.document.SaleEntity;
 import com.store.model.dto.ErrorMessage;
+import com.store.model.dto.ProductDto;
+import com.store.model.dto.ResponseDocumentDto;
+import com.store.model.entity.StoreEntity;
+import com.store.service.ProductDtoService;
 
 import javax.ws.rs.core.Response;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static com.store.util.InfoResult.*;
 
@@ -56,5 +66,40 @@ public class ResponseService {
                             .build())
                     .build();
         }
+    }
+
+    public static Response getResponseSale(Response response) {
+        if (getResponse(response).getStatus() == OK) {
+            SaleEntity saleEntity = (SaleEntity) response.getEntity();
+            return getProductDto(saleEntity.getProducts(), saleEntity.getId(), saleEntity.getNumber(), saleEntity.getStore());
+        }
+        return getResponse(response);
+    }
+
+
+    public static Response getResponseReceipt(Response response) {
+        if (getResponse(response).getStatus() == OK) {
+            ReceiptEntity receiptEntity = (ReceiptEntity) response.getEntity();
+            return getProductDto(receiptEntity.getProducts(), receiptEntity.getId(), receiptEntity.getNumber(), receiptEntity.getStore());
+        }
+        return getResponse(response);
+    }
+
+    private static Response getProductDto(List<ProductListEntity> products, long id, String number, StoreEntity store) {
+        List<ProductDto> productDtoList = new ArrayList<>();
+        for (ProductListEntity productListEntity : products) {
+            productDtoList.add(ProductDtoService.mappingSaleEntityToProductDto(
+                    productListEntity.getProduct(),
+                    productListEntity.getCount(),
+                    productListEntity.getPrice()));
+        }
+        return Response.status(OK).entity(
+                ResponseDocumentDto.builder()
+                        .id(id)
+                        .number(number)
+                        .store(store.getStoreName())
+                        .products(productDtoList)
+                        .build())
+                .build();
     }
 }

@@ -1,14 +1,11 @@
 package com.store.controller;
 
 import com.store.model.document.SaleEntity;
-import com.store.model.dto.ResponseProductDto;
+import com.store.model.dto.ResponseDocumentDto;
 import com.store.service.SaleEntityService;
 
 import javax.inject.Inject;
-import javax.ws.rs.GET;
-import javax.ws.rs.PUT;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
@@ -24,7 +21,7 @@ public class SaleEntityController {
     @GET
     @Path("all")
     @Produces("application/json")
-    public List<ResponseProductDto> getAllSales() {
+    public List<ResponseDocumentDto> getAllSales() {
         return service.getAllSales();
     }
 
@@ -37,5 +34,19 @@ public class SaleEntityController {
             return Response.status(OK).build();
         }
         return response;
+    }
+
+    @GET
+    @Path("get/id/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getSaleById(@PathParam("id") long id) {
+        return service.getSaleById(id);
+    }
+
+    @GET
+    @Path("get/number/{saleNumber}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getSaleBySaleNumber(@PathParam("saleNumber") String saleNumber) {
+        return service.getSaleBySaleNumber(saleNumber);
     }
 }

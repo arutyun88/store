@@ -7,7 +7,7 @@ import java.util.List;
 
 @Data
 @Builder
-public class ResponseProductDto {
+public class ResponseDocumentDto {
     private long id;
     private String number;
     private String store;

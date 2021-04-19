@@ -1,14 +1,11 @@
 package com.store.controller;
 
 import com.store.model.document.ReceiptEntity;
-import com.store.model.dto.ResponseProductDto;
+import com.store.model.dto.ResponseDocumentDto;
 import com.store.service.ReceiptEntityService;
 
 import javax.inject.Inject;
-import javax.ws.rs.GET;
-import javax.ws.rs.PUT;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
@@ -24,7 +21,7 @@ public class ReceiptEntityController {
     @GET
     @Path("all")
     @Produces("application/json")
-    public List<ResponseProductDto> getAllReceipts() {
+    public List<ResponseDocumentDto> getAllReceipts() {
         return service.getAllReceipts();
     }
 
@@ -37,5 +34,19 @@ public class ReceiptEntityController {
             return Response.status(OK).build();
         }
         return response;
+    }
+
+    @GET
+    @Path("get/id/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getReceiptById(@PathParam("id") long id) {
+        return service.getReceiptById(id);
+    }
+
+    @GET
+    @Path("get/number/{receiptNumber}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getReceiptByReceiptNumber(@PathParam("receiptNumber") String receiptNumber) {
+        return service.getReceiptByReceiptNumber(receiptNumber);
     }
 }
